@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vprodb
+  labels:
+    app: vprodb
 spec:
   selector:
     matchLabels:
@@ -14,7 +16,7 @@ spec:
     spec:
       containers:
       - name: vprodb
-        image: rahulkp98/vprofiledb:v1
+        image: rahulkp98/vprofiledb:V1
         volumeMounts:
           - mountPath:  /var/lib/mysql
             name: vpro-db-data
@@ -26,11 +28,11 @@ spec:
           - name: vprodb-port  
             containerPort: 3306
         env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-           secretKeyRef:
-             key: db-pass
-             name: app-secret
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+             secretKeyRef:
+               key: db-pass
+               name: app-secret
       nodeSelector:
         zone: us-east-1a
       volumes:
